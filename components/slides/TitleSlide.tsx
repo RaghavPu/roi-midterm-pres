@@ -1,9 +1,14 @@
 "use client";
 
+interface Author {
+  name: string;
+  linkedin?: string;
+}
+
 interface TitleSlideProps {
   title: string;
   subtitle?: string;
-  authors?: string[];
+  authors?: (string | Author)[];
   date?: string;
   tag?: string;
 }
@@ -31,14 +36,28 @@ export default function TitleSlide({
         )}
         {authors && authors.length > 0 && (
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            {authors.map((author) => (
-              <span
-                key={author}
-                className="rounded-full bg-surface px-4 py-1.5 text-sm text-zinc-400"
-              >
-                {author}
-              </span>
-            ))}
+            {authors.map((author) => {
+              const name = typeof author === "string" ? author : author.name;
+              const linkedin = typeof author === "string" ? undefined : author.linkedin;
+              return linkedin ? (
+                <a
+                  key={name}
+                  href={linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full bg-surface px-4 py-1.5 text-sm text-zinc-400 transition-colors hover:bg-accent/15 hover:text-accent-light"
+                >
+                  {name}
+                </a>
+              ) : (
+                <span
+                  key={name}
+                  className="rounded-full bg-surface px-4 py-1.5 text-sm text-zinc-400"
+                >
+                  {name}
+                </span>
+              );
+            })}
           </div>
         )}
         {date && (

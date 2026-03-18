@@ -7,6 +7,7 @@ interface TeamMember {
   role: string;
   initials: string;
   color: string;
+  linkedin?: string;
 }
 
 interface TeamSlideProps {
@@ -34,10 +35,16 @@ export default function TeamSlide({ title = "Meet the Team", members }: TeamSlid
           const isRevealed = step >= i + 1;
           const isLatest = step === i + 1;
 
+          const Wrapper = member.linkedin ? "a" : "div";
+          const wrapperProps = member.linkedin
+            ? { href: member.linkedin, target: "_blank", rel: "noopener noreferrer" }
+            : {};
+
           return (
-            <div
+            <Wrapper
               key={member.name}
-              className="flex flex-col items-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              {...wrapperProps}
+              className="group flex flex-col items-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] no-underline"
               style={{
                 opacity: isRevealed ? 1 : 0,
                 transform: isRevealed ? "translateY(0) scale(1)" : "translateY(40px) scale(0.9)",
@@ -46,7 +53,7 @@ export default function TeamSlide({ title = "Meet the Team", members }: TeamSlid
             >
               {/* Avatar */}
               <div
-                className={`relative mb-4 flex h-24 w-24 items-center justify-center rounded-full text-2xl font-bold text-white transition-all duration-700 ${member.color}`}
+                className={`relative mb-4 flex h-24 w-24 items-center justify-center rounded-full text-2xl font-bold text-white transition-all duration-700 group-hover:scale-105 ${member.color}`}
                 style={{
                   boxShadow: isLatest
                     ? "0 0 40px rgba(99, 102, 241, 0.4), 0 0 80px rgba(99, 102, 241, 0.15)"
@@ -61,7 +68,7 @@ export default function TeamSlide({ title = "Meet the Team", members }: TeamSlid
 
               {/* Name */}
               <span
-                className="text-lg font-semibold transition-colors duration-500"
+                className="text-lg font-semibold transition-colors duration-500 group-hover:text-accent-light"
                 style={{ color: isLatest ? "var(--foreground)" : "var(--muted)" }}
               >
                 {member.name}
@@ -74,7 +81,7 @@ export default function TeamSlide({ title = "Meet the Team", members }: TeamSlid
               >
                 {member.role}
               </span>
-            </div>
+            </Wrapper>
           );
         })}
       </div>
