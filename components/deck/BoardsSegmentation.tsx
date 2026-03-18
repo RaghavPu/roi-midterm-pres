@@ -3,10 +3,10 @@
 import { useSlideStep } from "../SlideContext";
 
 const EXPERIMENTS = [
-  { label: "Stable Camera", video: "" },
-  { label: "Moving Camera", video: "" },
-  { label: "Single Logos", video: "" },
-  { label: "Cuts in Camera Scenes", video: "", tag: "experiment" },
+  { label: "Stable Camera", video: "/sam2-stable-camera.mp4" },
+  { label: "Moving Camera", video: "/sam2-moving-camera.mp4" },
+  { label: "Single Logos", video: "/sam2-single-logos.mp4" },
+  { label: "Cuts in Camera Scenes", video: "/sam2-camera-cuts.mp4", tag: "experiment" },
 ];
 
 export default function BoardsSegmentation() {
@@ -145,34 +145,40 @@ export default function BoardsSegmentation() {
           {/* Right — video placeholder, as large as possible */}
           <div className="flex-1 min-w-0">
             <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-white/[0.02]">
-              {EXPERIMENTS.map((exp, i) => (
-                <div
-                  key={exp.label}
-                  className="absolute inset-0 flex items-center justify-center transition-opacity duration-400"
-                  style={{
-                    opacity: activeIdx === i ? 1 : 0,
-                    pointerEvents: activeIdx === i ? "auto" : "none",
-                  }}
-                >
-                  {exp.video ? (
-                    <video
-                      src={exp.video}
-                      className="h-full w-full object-cover"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center gap-3 text-muted/30">
-                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <polygon points="5 3 19 12 5 21 5 3" />
-                      </svg>
-                      <span className="font-mono text-[11px]">{exp.label}</span>
-                    </div>
-                  )}
-                </div>
-              ))}
+              {EXPERIMENTS.map((exp, i) => {
+                const isActive = activeIdx === i;
+                return (
+                  <div
+                    key={exp.label}
+                    className="absolute inset-0 flex items-center justify-center transition-opacity duration-400"
+                    style={{
+                      opacity: isActive ? 1 : 0,
+                      pointerEvents: isActive ? "auto" : "none",
+                    }}
+                  >
+                    {exp.video ? (
+                      isActive && (
+                        <video
+                          key={`${exp.label}-${isActive}`}
+                          src={exp.video}
+                          className="h-full w-full object-cover"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        />
+                      )
+                    ) : (
+                      <div className="flex flex-col items-center gap-3 text-muted/30">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polygon points="5 3 19 12 5 21 5 3" />
+                        </svg>
+                        <span className="font-mono text-[11px]">{exp.label}</span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
