@@ -88,7 +88,7 @@ export default function PipelineOverview() {
 
         {/* ═══════════ PROCESS NODES ═══════════ */}
 
-        {/* detect player movement */}
+        {/* player segmentation */}
         <g style={{ opacity: detectPlayer.opacity, transition: "opacity 400ms" }}>
           <rect x={195} y={50} width={155} height={44} rx={6}
             stroke={detectPlayer.lit ? HI : "#a855f7"} strokeWidth={detectPlayer.lit ? 1.5 : 1} strokeOpacity={detectPlayer.lit ? 0.9 : 0.4}
@@ -96,10 +96,10 @@ export default function PipelineOverview() {
             style={{ transition: "all 400ms" }}
           />
           <text x={272} y={68} fill={detectPlayer.lit ? HI : "#c4b5fd"} fontSize={11} textAnchor="middle" fontWeight={500} style={{ transition: "fill 400ms" }}>
-            detect player
+            player
           </text>
           <text x={272} y={82} fill={detectPlayer.lit ? HI : "#c4b5fd"} fontSize={11} textAnchor="middle" fontWeight={500} style={{ transition: "fill 400ms" }}>
-            movement
+            segmentation
           </text>
         </g>
 
