@@ -161,7 +161,7 @@ export default function Presentation({ children, slideSteps }: PresentationProps
 
       <div className="relative h-full w-full">
         {children.map((child, i) => (
-          <SlideContext.Provider key={i} value={{ step: i === current ? step : 0 }}>
+          <SlideContext.Provider key={i} value={{ step: i === current ? step : 0, isActive: i === current }}>
             <div
               className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 i === current
