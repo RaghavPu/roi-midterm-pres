@@ -180,7 +180,7 @@ export default function Presentation({ children, slideSteps, minimap }: Presenta
           } else if (showMinimap) {
             cls = "pointer-events-none";
             style = {
-              transform: "scale(0.32)",
+              transform: "scale(0.28) translateY(-60px)",
               transformOrigin: "top center",
               opacity: 0.8,
               zIndex: 20,
