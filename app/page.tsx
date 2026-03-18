@@ -1,5 +1,6 @@
 import Presentation from "@/components/Presentation";
 import TitleSlide from "@/components/slides/TitleSlide";
+import TeamSlide from "@/components/slides/TeamSlide";
 import SectionSlide from "@/components/slides/SectionSlide";
 import ContentSlide from "@/components/slides/ContentSlide";
 import BulletSlide from "@/components/slides/BulletSlide";
@@ -16,19 +17,44 @@ function PlaceholderImage({ label, color }: { label: string; color: string }) {
   );
 }
 
+const SLIDE_STEPS = [
+  1,  // Title
+  5,  // Team (1 heading + 4 reveals)
+  1,  // Section — Problem
+  1,  // Content — Problem detail
+  1,  // Section — Approach
+  1,  // Bullets — Pipeline
+  1,  // Content — Architecture
+  1,  // Image — Result
+  1,  // Bullets — Status
+  1,  // Section — Next steps
+  1,  // Content — Timeline
+  1,  // Closing
+];
+
 export default function Home() {
   return (
-    <Presentation>
+    <Presentation slideSteps={SLIDE_STEPS}>
       {/* Slide 1: Title */}
       <TitleSlide
         tag="Midterm Presentation"
         title="ROI Tracking in Sports Broadcasts"
         subtitle="Automated region-of-interest detection and sponsor overlay analysis using computer vision"
-        authors={["Alice Chen", "Bob Martinez", "Charlie Kim", "Dana Patel"]}
+        authors={["Raghav", "Martina", "Giovanni", "Enrique"]}
         date="March 2026"
       />
 
-      {/* Slide 2: Section — Problem */}
+      {/* Slide 2: Team */}
+      <TeamSlide
+        members={[
+          { name: "Raghav", role: "MS CSE Harvard", initials: "R", color: "bg-indigo-600" },
+          { name: "Enrique", role: "MS CSE Harvard", initials: "E", color: "bg-amber-600" },
+          { name: "Giovanni", role: "MS CSE Polimi", initials: "G", color: "bg-emerald-600" },
+          { name: "Martina", role: "MS CSE Polimi", initials: "M", color: "bg-rose-600" },
+        ]}
+      />
+
+      {/* Slide 3: Section — Problem */}
       <SectionSlide
         number="01"
         title="Problem Statement"
