@@ -53,113 +53,49 @@ export default function Homography() {
       >
         <span className="mb-6 font-mono text-xs tracking-widest text-accent uppercase">Motivation</span>
 
-        <div
-          className="flex items-center gap-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-          style={{
-            transform: step >= 5 ? "translateX(-120px)" : "translateX(0)",
-          }}
-        >
-          {/* 1 — Camera frame */}
-          <div
-            className="flex flex-col items-center gap-2 transition-all duration-500"
-            style={{
-              opacity: step >= 1 ? 1 : 0,
-              transform: step >= 1 ? "translateY(0)" : "translateY(16px)",
-            }}
-          >
-            <div className="aspect-video w-52">
-              <StepImage src="/homography/1_original.png" alt="Original camera frame" />
-            </div>
-            <span className="font-mono text-[10px] text-muted/50">Original frame</span>
-          </div>
-
-          {/* Arrow 1→2 */}
-          <div
-            className="transition-all duration-500"
-            style={{ opacity: step >= 2 ? 1 : 0, transform: step >= 2 ? "translateX(0)" : "translateX(-8px)" }}
-          >
-            <Arrow />
-          </div>
-
-          {/* 2 — Frame with bounding box */}
-          <div
-            className="flex flex-col items-center gap-2 transition-all duration-500"
-            style={{
-              opacity: step >= 2 ? 1 : 0,
-              transform: step >= 2 ? "translateY(0)" : "translateY(16px)",
-            }}
-          >
-            <div className="aspect-video w-52">
-              <StepImage src="/homography/2_bbox.png" alt="Frame with bounding box" />
-            </div>
-            <span className="font-mono text-[10px] text-muted/50">Detect region</span>
-          </div>
-
-          {/* Arrow 2→3 */}
-          <div
-            className="transition-all duration-500"
-            style={{ opacity: step >= 3 ? 1 : 0, transform: step >= 3 ? "translateX(0)" : "translateX(-8px)" }}
-          >
-            <Arrow />
-          </div>
-
-          {/* 3 — Rectified version */}
-          <div
-            className="flex flex-col items-center gap-2 transition-all duration-500"
-            style={{
-              opacity: step >= 3 ? 1 : 0,
-              transform: step >= 3 ? "translateY(0)" : "translateY(16px)",
-            }}
-          >
-            <div className="w-44">
-              <StepImage src="/homography/3_rectified.png" alt="Rectified flat banner" />
-            </div>
-            <span className="font-mono text-[10px] text-muted/50">Rectify to flat</span>
-          </div>
-
-          {/* Arrow 3→4 */}
-          <div
-            className="transition-all duration-500"
-            style={{ opacity: step >= 4 ? 1 : 0, transform: step >= 4 ? "translateX(0)" : "translateX(-8px)" }}
-          >
-            <Arrow />
-          </div>
-
-          {/* 4 — New logo in flat/rectified form */}
-          <div
-            className="flex flex-col items-center gap-2 transition-all duration-500"
-            style={{
-              opacity: step >= 4 ? 1 : 0,
-              transform: step >= 4 ? "translateY(0)" : "translateY(16px)",
-            }}
-          >
-            <div className="w-44">
-              <StepImage src="/homography/4_logo_flat.png" alt="Replacement logo (flat)" />
-            </div>
-            <span className="font-mono text-[10px] text-muted/50">New logo (flat)</span>
-          </div>
-
-          {/* Arrow 4→5 */}
-          <div
-            className="transition-all duration-500"
-            style={{ opacity: step >= 5 ? 1 : 0, transform: step >= 5 ? "translateX(0)" : "translateX(-8px)" }}
-          >
-            <Arrow />
-          </div>
-
-          {/* 5 — New image warped back into perspective */}
-          <div
-            className="flex flex-col items-center gap-2 transition-all duration-500"
-            style={{
-              opacity: step >= 5 ? 1 : 0,
-              transform: step >= 5 ? "translateY(0)" : "translateY(16px)",
-            }}
-          >
-            <div className="aspect-video w-52">
-              <StepImage src="/homography/5_overlay.png" alt="New overlay in perspective" />
-            </div>
-            <span className="font-mono text-[10px] text-muted/50">Warp overlay back</span>
-          </div>
+        <div className="flex items-center">
+          {[
+            { src: "/homography/1_original.png", alt: "Original camera frame", label: "Original frame",        w: "w-52", aspect: "aspect-video", at: 1 },
+            { src: "/homography/2_bbox.png",     alt: "Frame with bounding box", label: "Detect region",       w: "w-52", aspect: "aspect-video", at: 2 },
+            { src: "/homography/3_rectified.png", alt: "Rectified flat banner", label: "Rectify to flat",      w: "w-44", aspect: "",             at: 3 },
+            { src: "/homography/4_logo_flat.png", alt: "Replacement logo (flat)", label: "New logo (flat)",     w: "w-44", aspect: "",             at: 4 },
+            { src: "/homography/5_overlay.png",  alt: "New overlay in perspective", label: "Warp overlay back", w: "w-52", aspect: "aspect-video", at: 5 },
+          ].map((item, i) => {
+            const show = step >= item.at;
+            const showArrow = i > 0 && step >= item.at;
+            return (
+              <div key={item.src} className="flex items-center">
+                {/* Arrow (before items 2–5) */}
+                {i > 0 && (
+                  <div
+                    className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    style={{
+                      maxWidth: showArrow ? 48 : 0,
+                      opacity: showArrow ? 1 : 0,
+                      padding: showArrow ? "0 8px" : "0",
+                    }}
+                  >
+                    <Arrow />
+                  </div>
+                )}
+                {/* Image */}
+                <div
+                  className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                  style={{
+                    maxWidth: show ? 250 : 0,
+                    opacity: show ? 1 : 0,
+                  }}
+                >
+                  <div className="flex flex-col items-center gap-2">
+                    <div className={`${item.w} ${item.aspect}`}>
+                      <StepImage src={item.src} alt={item.alt} />
+                    </div>
+                    <span className="font-mono text-[10px] text-muted/50 whitespace-nowrap">{item.label}</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
