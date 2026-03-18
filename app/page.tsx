@@ -16,7 +16,7 @@ import Thanks from "@/components/deck/Thanks";
 const SLIDE_STEPS = [
   1,  // Title
   5,  // Team (1 heading + 4 reveals)
-  1,  // Problem Outline
+  2,  // Problem Outline (1 base + 1 bounding box reveal)
   1,  // Challenges
   1,  // Pipeline Overview
   1,  // Boards Segmentation
