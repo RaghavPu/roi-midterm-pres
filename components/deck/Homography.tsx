@@ -42,13 +42,13 @@ export default function Homography() {
         </div>
       </div>
 
-      {/* Steps 1–4 — Motivation workflow */}
+      {/* Steps 1–5 — Motivation workflow */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center px-12 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
-          opacity: step >= 1 ? 1 : 0,
-          transform: step >= 1 ? "translateX(0)" : "translateX(40px)",
-          pointerEvents: step >= 1 ? "auto" : "none",
+          opacity: step >= 1 && step <= 5 ? 1 : 0,
+          transform: step >= 1 && step <= 5 ? "translateX(0)" : step < 1 ? "translateX(40px)" : "translateX(-40px)",
+          pointerEvents: step >= 1 && step <= 5 ? "auto" : "none",
         }}
       >
         <span className="mb-6 font-mono text-xs tracking-widest text-accent uppercase">Motivation</span>
@@ -96,6 +96,36 @@ export default function Homography() {
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Step 6 — Vanishing point */}
+      <div
+        className="absolute inset-0 flex items-center justify-center px-16 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{
+          opacity: step >= 6 ? 1 : 0,
+          transform: step >= 6 ? "translateX(0)" : "translateX(40px)",
+          pointerEvents: step >= 6 ? "auto" : "none",
+        }}
+      >
+        <div className="flex w-full max-w-6xl items-center gap-12">
+          <div className="flex w-[240px] shrink-0 flex-col">
+            <span className="mb-2 font-mono text-sm tracking-widest text-accent">05</span>
+            <h2 className="text-3xl font-bold tracking-tight text-foreground">
+              Vanishing<br />Point
+            </h2>
+            <div className="mt-3 h-px w-16 bg-accent" />
+            <p className="mt-4 text-sm leading-relaxed text-muted">
+              The vanishing point constrains how banner edges converge — it&apos;s not a true parallelogram but a perspective quadrilateral.
+            </p>
+          </div>
+          <div className="flex-1 min-w-0 overflow-hidden rounded-xl border border-surface-light bg-white/[0.03] shadow-2xl shadow-black/30">
+            <img
+              src="/homography/vanishing_point.png"
+              alt="Vanishing point visualization with converging lines"
+              className="w-full"
+            />
+          </div>
         </div>
       </div>
     </div>
