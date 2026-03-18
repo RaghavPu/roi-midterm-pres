@@ -103,9 +103,9 @@ export default function Homography() {
       <div
         className="absolute inset-0 flex items-center justify-center px-16 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
-          opacity: step >= 6 ? 1 : 0,
-          transform: step >= 6 ? "translateX(0)" : "translateX(40px)",
-          pointerEvents: step >= 6 ? "auto" : "none",
+          opacity: step === 6 ? 1 : 0,
+          transform: step === 6 ? "translateX(0)" : step < 6 ? "translateX(40px)" : "translateX(-40px)",
+          pointerEvents: step === 6 ? "auto" : "none",
         }}
       >
         <div className="flex w-full max-w-6xl items-center gap-12">
@@ -125,6 +125,94 @@ export default function Homography() {
               alt="Vanishing point visualization with converging lines"
               className="w-full"
             />
+          </div>
+        </div>
+      </div>
+
+      {/* Steps 7–14 — Quadrilateral fitting algorithm */}
+      <div
+        className="absolute inset-0 flex items-center justify-center px-16 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{
+          opacity: step >= 7 ? 1 : 0,
+          transform: step >= 7 ? "translateX(0)" : "translateX(40px)",
+          pointerEvents: step >= 7 ? "auto" : "none",
+        }}
+      >
+        <div className="flex w-full max-w-6xl items-center gap-12">
+          {/* Left — title + step list */}
+          <div className="flex w-[220px] shrink-0 flex-col">
+            <span className="mb-2 font-mono text-sm tracking-widest text-accent">05</span>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
+              Quadrilateral<br />Fitting
+            </h2>
+            <div className="mt-3 h-px w-16 bg-accent" />
+
+            <ul className="mt-5 flex flex-col gap-0.5">
+              {[
+                { label: "Original frame", at: 7 },
+                { label: "SAM mask", at: 8 },
+                { label: "Binary mask", at: 9 },
+                { label: "Min-area rectangle", at: 10 },
+                { label: "Split along axes", at: 11 },
+                { label: "Fit edge lines", at: 12 },
+                { label: "Intersect corners", at: 13 },
+                { label: "Rectified view", at: 14 },
+              ].map((item) => {
+                const active = step === item.at;
+                const past = step > item.at;
+                return (
+                  <li
+                    key={item.label}
+                    className="flex items-center gap-2 rounded-md px-2 py-1.5 transition-all duration-300"
+                    style={{ background: active ? "rgba(255,255,255,0.05)" : "transparent" }}
+                  >
+                    <span
+                      className="mt-[1px] h-1.5 w-1.5 shrink-0 rounded-full transition-all duration-300"
+                      style={{
+                        background: active ? "var(--accent)" : past ? "var(--accent-light)" : "rgba(255,255,255,0.12)",
+                        boxShadow: active ? "0 0 8px var(--accent)" : "none",
+                      }}
+                    />
+                    <span
+                      className="text-[12px] leading-snug transition-all duration-300"
+                      style={{
+                        color: active ? "var(--foreground)" : past ? "var(--muted)" : "rgba(255,255,255,0.25)",
+                        fontWeight: active ? 600 : 400,
+                      }}
+                    >
+                      {item.label}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          {/* Right — image (crossfade between steps) */}
+          <div className="relative flex-1 min-w-0">
+            <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-surface-light bg-black/40 shadow-2xl shadow-black/30">
+              {[
+                { src: "/homography/fit-steps/1_frame.png", at: 7 },
+                { src: "/homography/fit-steps/2_mask_overlay.png", at: 8 },
+                { src: "/homography/fit-steps/3_bw_mask.png", at: 9 },
+                { src: "/homography/fit-steps/4_minrect.png", at: 10 },
+                { src: "/homography/fit-steps/5_axes_points.png", at: 11 },
+                { src: "/homography/fit-steps/6_fitted_lines.png", at: 12 },
+                { src: "/homography/fit-steps/7_intersections.png", at: 13 },
+                { src: "/homography/fit-steps/8_rectified.png", at: 14 },
+              ].map((item) => (
+                <div
+                  key={item.src}
+                  className="absolute inset-0 flex items-center justify-center transition-opacity duration-400"
+                  style={{
+                    opacity: step === item.at ? 1 : 0,
+                    pointerEvents: step === item.at ? "auto" : "none",
+                  }}
+                >
+                  <img src={item.src} alt="" className="max-h-full max-w-full object-contain" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

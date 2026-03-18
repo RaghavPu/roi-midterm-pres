@@ -26,7 +26,7 @@ const SLIDE_STEPS = [
   1,  // Challenges
   1,  // Pipeline Overview
   6,  // Boards Segmentation (1 intro + 1 SAM + 4 experiments)
-  7,  // Homography (1 intro + 5 motivation + 1 vanishing point)
+  15, // Homography (1 intro + 5 motivation + 1 vanishing point + 8 fit steps)
   1,  // Logo Overlay
   1,  // Player Tracking
   1,  // Demo
