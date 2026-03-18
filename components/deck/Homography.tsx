@@ -53,7 +53,12 @@ export default function Homography() {
       >
         <span className="mb-6 font-mono text-xs tracking-widest text-accent uppercase">Motivation</span>
 
-        <div className="flex w-full max-w-5xl items-center gap-4">
+        <div
+          className="flex items-center gap-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          style={{
+            transform: step >= 5 ? "translateX(-120px)" : "translateX(0)",
+          }}
+        >
           {/* 1 — Camera frame */}
           <div
             className="flex flex-col items-center gap-2 transition-all duration-500"
@@ -120,7 +125,7 @@ export default function Homography() {
             <Arrow />
           </div>
 
-          {/* 4 — New image warped back into perspective */}
+          {/* 4 — New logo in flat/rectified form */}
           <div
             className="flex flex-col items-center gap-2 transition-all duration-500"
             style={{
@@ -128,8 +133,30 @@ export default function Homography() {
               transform: step >= 4 ? "translateY(0)" : "translateY(16px)",
             }}
           >
+            <div className="w-44">
+              <StepImage src="/homography/4_logo_flat.png" alt="Replacement logo (flat)" />
+            </div>
+            <span className="font-mono text-[10px] text-muted/50">New logo (flat)</span>
+          </div>
+
+          {/* Arrow 4→5 */}
+          <div
+            className="transition-all duration-500"
+            style={{ opacity: step >= 5 ? 1 : 0, transform: step >= 5 ? "translateX(0)" : "translateX(-8px)" }}
+          >
+            <Arrow />
+          </div>
+
+          {/* 5 — New image warped back into perspective */}
+          <div
+            className="flex flex-col items-center gap-2 transition-all duration-500"
+            style={{
+              opacity: step >= 5 ? 1 : 0,
+              transform: step >= 5 ? "translateY(0)" : "translateY(16px)",
+            }}
+          >
             <div className="aspect-video w-52">
-              <StepImage src="/homography/4_overlay.png" alt="New overlay in perspective" />
+              <StepImage src="/homography/5_overlay.png" alt="New overlay in perspective" />
             </div>
             <span className="font-mono text-[10px] text-muted/50">Warp overlay back</span>
           </div>
