@@ -25,7 +25,7 @@ const SLIDE_STEPS = [
   2,  // Problem Outline (1 base + 1 bounding box reveal)
   1,  // Challenges
   1,  // Pipeline Overview
-  1,  // Boards Segmentation
+  2,  // Boards Segmentation (1 intro + 1 SAM)
   1,  // Homography
   1,  // Logo Overlay
   1,  // Player Tracking
