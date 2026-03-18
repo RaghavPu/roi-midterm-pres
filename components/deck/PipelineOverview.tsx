@@ -16,7 +16,7 @@ export default function PipelineOverview() {
   const hl = useMinimapHighlight();
   const hasHighlight = isMinimap && !!hl;
 
-  const n = (id: NodeId) => {
+  const n = (id: string) => {
     if (!hasHighlight) return { opacity: 1, lit: false };
     const lit = id === hl || (hl === "homography" && id === "optical-flow") || (hl === "homography" && id === "diamond");
     return { opacity: lit ? 1 : 0.3, lit };
