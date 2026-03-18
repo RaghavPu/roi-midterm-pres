@@ -5,12 +5,19 @@ import SlideProgress from "./SlideProgress";
 import SlideNav from "./SlideNav";
 import { SlideContext } from "./SlideContext";
 
+interface MinimapConfig {
+  slide: number;
+  range: [number, number];
+  highlights?: Record<number, string>;
+}
+
 interface PresentationProps {
   children: ReactNode[];
   slideSteps?: number[];
+  minimap?: MinimapConfig;
 }
 
-export default function Presentation({ children, slideSteps }: PresentationProps) {
+export default function Presentation({ children, slideSteps, minimap }: PresentationProps) {
   const [current, setCurrent] = useState(0);
   const [step, setStep] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -160,22 +167,42 @@ export default function Presentation({ children, slideSteps }: PresentationProps
       </button>
 
       <div className="relative h-full w-full">
-        {children.map((child, i) => (
-          <SlideContext.Provider key={i} value={{ step: i === current ? step : 0, isActive: i === current }}>
-            <div
-              className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                i === current
-                  ? "pointer-events-auto opacity-100 translate-x-0"
-                  : i < current
-                    ? "pointer-events-none opacity-0 -translate-x-16"
-                    : "pointer-events-none opacity-0 translate-x-16"
-              }`}
-              aria-hidden={i !== current}
-            >
-              {child}
-            </div>
-          </SlideContext.Provider>
-        ))}
+        {children.map((child, i) => {
+          const isMinimapSlide = minimap && i === minimap.slide;
+          const showMinimap = isMinimapSlide && i < current && current >= minimap!.range[0] && current <= minimap!.range[1];
+
+          let cls: string;
+          let style: React.CSSProperties | undefined;
+
+          if (i === current) {
+            cls = "pointer-events-auto opacity-100";
+            style = { transform: "translateX(0) scale(1)", transformOrigin: "top center" };
+          } else if (showMinimap) {
+            cls = "pointer-events-none";
+            style = {
+              transform: "scale(0.32)",
+              transformOrigin: "top center",
+              opacity: 0.8,
+              zIndex: 20,
+            };
+          } else if (i < current) {
+            cls = "pointer-events-none opacity-0 -translate-x-16";
+          } else {
+            cls = "pointer-events-none opacity-0 translate-x-16";
+          }
+
+          return (
+            <SlideContext.Provider key={i} value={{ step: i === current ? step : 0, isActive: i === current, isMinimap: !!showMinimap, minimapHighlight: showMinimap ? minimap!.highlights?.[current] : undefined }}>
+              <div
+                className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${cls}`}
+                style={style}
+                aria-hidden={i !== current && !showMinimap}
+              >
+                {child}
+              </div>
+            </SlideContext.Provider>
+          );
+        })}
       </div>
 
       <SlideNav

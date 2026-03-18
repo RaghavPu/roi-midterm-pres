@@ -13,6 +13,12 @@ import FutureImprovements from "@/components/deck/FutureImprovements";
 import AsksMitsubishi from "@/components/deck/AsksMitsubishi";
 import Thanks from "@/components/deck/Thanks";
 
+const PIPELINE_MINIMAP = {
+  slide: 4,
+  range: [5, 8] as [number, number],
+  highlights: { 5: "banner-seg", 6: "homography", 7: "overlay-logo", 8: "detect-player" },
+};
+
 const SLIDE_STEPS = [
   1,  // Title
   5,  // Team (1 heading + 4 reveals)
@@ -31,7 +37,7 @@ const SLIDE_STEPS = [
 
 export default function Home() {
   return (
-    <Presentation slideSteps={SLIDE_STEPS}>
+    <Presentation slideSteps={SLIDE_STEPS} minimap={PIPELINE_MINIMAP}>
       <Title />
       <Team />
       <ProblemOutline />
