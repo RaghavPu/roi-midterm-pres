@@ -29,7 +29,7 @@ const SLIDE_STEPS = [
   15, // Homography (1 intro + 5 motivation + 1 vanishing point + 8 fit steps)
   3,  // Logo Overlay (1 intro + 2 examples)
   2,  // Player Tracking (1 intro + 1 video demo)
-  2,  // Demo (stable camera + moving camera)
+  3,  // Demo (stable + moving + player overlay)
   1,  // Future Improvements
   1,  // Asks From Mitsubishi
   1,  // Thanks

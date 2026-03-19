@@ -5,6 +5,7 @@ import { useSlideStep } from "../SlideContext";
 const DEMOS = [
   { label: "Stable Camera", video: "/demo-stable.mp4" },
   { label: "Camera Movement", video: "/demo-moving.mp4" },
+  { label: "Player Overlay (experimental)", video: "/demo-player-overlay.mp4" },
 ];
 
 export default function Demo() {
