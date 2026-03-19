@@ -197,6 +197,7 @@ export default function Presentation({ children, slideSteps, minimap }: Presenta
                 className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${cls}`}
                 style={style}
                 aria-hidden={i !== current && !showMinimap}
+                {...(i !== current && !showMinimap ? { inert: true } : {})}
               >
                 {child}
               </div>
