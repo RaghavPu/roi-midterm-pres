@@ -1,20 +1,68 @@
-import ImageSlide from "../slides/ImageSlide";
+"use client";
 
-function Placeholder() {
-  return (
-    <div className="flex h-72 w-[640px] items-center justify-center rounded-xl bg-zinc-800">
-      <span className="font-mono text-sm text-white/60">demo video</span>
-    </div>
-  );
-}
+import { useSlideStep } from "../SlideContext";
+
+const DEMOS = [
+  { label: "Stable Camera", video: "/demo-stable.mp4" },
+  { label: "Camera Movement", video: "/demo-moving.mp4" },
+];
 
 export default function Demo() {
+  const step = useSlideStep();
+
   return (
-    <ImageSlide
-      title="Demo — Current Progress"
-      caption="Placeholder — embedded demo video will go here"
-    >
-      <Placeholder />
-    </ImageSlide>
+    <div className="flex h-full w-full items-center justify-center px-16">
+      <div className="flex w-full max-w-5xl flex-col items-center gap-6">
+        {/* Header row */}
+        <div className="flex w-full items-end justify-between">
+          <div>
+            <span className="mb-1 block font-mono text-sm tracking-widest text-accent">08</span>
+            <h2 className="text-3xl font-bold tracking-tight text-foreground">Demo</h2>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex gap-4">
+            {DEMOS.map((d, i) => (
+              <span
+                key={d.label}
+                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ${
+                  step === i
+                    ? "bg-accent/20 text-accent"
+                    : "text-muted/40"
+                }`}
+              >
+                {d.label}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Video container */}
+        <div className="relative w-full aspect-video overflow-hidden rounded-xl border border-surface-light bg-black/40 shadow-2xl shadow-black/30">
+          {DEMOS.map((d, i) => (
+            <div
+              key={d.video}
+              className="absolute inset-0 transition-opacity duration-400"
+              style={{
+                opacity: step === i ? 1 : 0,
+                pointerEvents: step === i ? "auto" : "none",
+              }}
+            >
+              {step === i && (
+                <video
+                  key={d.video + i}
+                  src={d.video}
+                  className="h-full w-full object-contain"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
