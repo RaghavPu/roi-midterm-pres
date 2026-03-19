@@ -1,6 +1,7 @@
 "use client";
 
 import { useSlideStep } from "../SlideContext";
+import AutoVideo from "../AutoVideo";
 
 const DEMOS = [
   { label: "Stable Camera", video: "/demo-stable.mp4" },
@@ -50,14 +51,10 @@ export default function Demo() {
               }}
             >
               {step === i && (
-                <video
+                <AutoVideo
                   key={d.video + i}
                   src={d.video}
                   className="h-full w-full object-contain"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
                 />
               )}
             </div>

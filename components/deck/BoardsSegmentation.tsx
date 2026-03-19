@@ -1,6 +1,7 @@
 "use client";
 
 import { useSlideStep } from "../SlideContext";
+import AutoVideo from "../AutoVideo";
 
 const EXPERIMENTS = [
   { label: "Stable Camera", video: "/sam2-stable-camera.mp4" },
@@ -158,14 +159,10 @@ export default function BoardsSegmentation() {
                   >
                     {exp.video ? (
                       isActive && (
-                        <video
+                        <AutoVideo
                           key={`${exp.label}-${isActive}`}
                           src={exp.video}
                           className="h-full w-full object-cover"
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
                         />
                       )
                     ) : (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useSlideStep } from "../SlideContext";
+import AutoVideo from "../AutoVideo";
 
 export default function PlayerTracking() {
   const step = useSlideStep();
@@ -40,14 +41,10 @@ export default function PlayerTracking() {
         <div className="w-full max-w-4xl">
           <div className="overflow-hidden rounded-xl border border-surface-light bg-black/40 shadow-2xl shadow-black/30">
             {step >= 1 && (
-              <video
+              <AutoVideo
                 key="player-tracking"
                 src="/player-tracking.mp4"
                 className="w-full"
-                autoPlay
-                loop
-                muted
-                playsInline
               />
             )}
           </div>
